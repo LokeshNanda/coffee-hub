@@ -18,7 +18,7 @@ const ids = <T extends { id: string }>(list: T[]) => list.map((x) => x.id);
 
 describe('content integrity', () => {
   it('has unique ids in every collection', () => {
-    for (const list of [methods, processing, origins, roasts, varietals, grindSizes]) {
+    for (const list of [methods, processing, origins, roasts, varietals, grindSizes] as { id: string }[][]) {
       const all = ids(list);
       expect(new Set(all).size).toBe(all.length);
     }
