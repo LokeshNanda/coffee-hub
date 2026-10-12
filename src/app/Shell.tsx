@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 import { Icon } from '../components/Icon';
+import { InstallBanner } from '../components/InstallBanner';
 import { useTheme } from './theme';
 
 const tabs = [
@@ -31,6 +32,7 @@ export function Shell() {
         ))}
       </nav>
       <main className="main">
+        <InstallBanner />
         <Outlet />
       </main>
       {needRefresh && (

@@ -1442,3 +1442,63 @@ button.chip {
   font-size: 0.85rem;
   font-weight: 600;
 }
+
+/* ---------- Install banner ---------- */
+.install-banner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 10px 10px 10px 12px;
+  border-radius: var(--r-lg);
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.install-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--accent);
+}
+.install-icon svg {
+  width: 22px;
+  height: 22px;
+}
+.install-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  font-size: 0.9rem;
+}
+.install-text strong {
+  font-weight: 600;
+}
+.install-text span {
+  color: var(--text-2);
+  font-size: 0.82rem;
+}
+.install-close {
+  background: transparent;
+  border: 0;
+  color: var(--text-3);
+  font-size: 1.3rem;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.install-close:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+@media (max-width: 480px) {
+  .install-text span {
+    display: none;
+  }
+}

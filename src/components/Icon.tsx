@@ -178,6 +178,12 @@ const icons: Record<string, React.ReactNode> = {
   pause: <path d="M8 5v14M16 5v14" strokeWidth={3} />,
   next: <path d="M6 5v14l9-7zM18 5v14" />,
   download: <path d="M12 4v11M7 11l5 5 5-5M5 20h14" />,
+  install: (
+    <>
+      <rect x="6" y="2.5" width="12" height="19" rx="2.5" />
+      <path d="M12 7v7M9 11l3 3 3-3M10 18h4" />
+    </>
+  ),
   upload: <path d="M12 15V4M7 8l5-5 5 5M5 20h14" />,
   trash: <path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6" />,
   edit: <path d="M4 20h4l10-10-4-4L4 16zM13 7l4 4" />,

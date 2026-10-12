@@ -1,28 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Icon } from '../../components/Icon';
 import { db } from '../../db/schema';
 import { exportBackup, backupFileName, parseBackup, importBackup, type BackupFile, type ImportMode } from '../../db/backup';
 import { useTheme, type Theme } from '../../app/theme';
+import { useInstall } from '../../app/install';
 
 const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`;
 
-interface InstallPromptEvent extends Event {
-  prompt: () => Promise<void>;
-}
-
 export function SettingsPage() {
   const [theme, setTheme] = useTheme();
-  const [installEvent, setInstallEvent] = useState<InstallPromptEvent | null>(null);
-  useEffect(() => {
-    const onPrompt = (e: Event) => {
-      e.preventDefault();
-      setInstallEvent(e as InstallPromptEvent);
-    };
-    window.addEventListener('beforeinstallprompt', onPrompt);
-    return () => window.removeEventListener('beforeinstallprompt', onPrompt);
-  }, []);
-  const standalone = window.matchMedia('(display-mode: standalone)').matches;
+  const { canInstall, installed, install } = useInstall();
   const counts = useLiveQuery(async () => ({ beans: await db.beans.count(), brews: await db.brews.count() }), []);
   const fileRef = useRef<HTMLInputElement>(null);
   const [pending, setPending] = useState<BackupFile | null>(null);
@@ -165,23 +153,17 @@ export function SettingsPage() {
 
       <section className="section card stack">
         <h3>Install on your phone</h3>
-        {standalone ? (
+        {installed ? (
           <p className="muted" style={{ margin: 0 }}>
             Installed. Coffee Hub works offline from your home screen.
           </p>
-        ) : installEvent ? (
+        ) : canInstall ? (
           <>
             <p className="muted" style={{ margin: 0 }}>
               Add it to your home screen so it opens full-screen and works offline.
             </p>
-            <button
-              className="btn primary"
-              onClick={async () => {
-                await installEvent.prompt();
-                setInstallEvent(null);
-              }}
-            >
-              Install app
+            <button className="btn primary" onClick={install}>
+              <Icon name="install" width={18} height={18} /> Install app
             </button>
           </>
         ) : (
