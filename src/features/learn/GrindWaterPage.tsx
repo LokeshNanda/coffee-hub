@@ -25,7 +25,7 @@ function GrindSwatch({ position }: { position: number }) {
 export function GrindWaterPage() {
   return (
     <>
-      <PageHead title="Grind & water" intro="Grind size and water decide how much of the coffee ends up in your cup. Everything else is fine tuning." />
+      <PageHead title="Grind and water" intro="Grind size and water decide how much of the coffee ends up in your cup. Everything else is fine tuning." />
 
       <section className="section">
         <h2>Grind scale</h2>

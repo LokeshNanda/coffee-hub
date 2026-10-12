@@ -23,7 +23,9 @@ export function Shell() {
         <div className="nav-brand">Coffee Hub</div>
         {tabs.map((t) => (
           <NavLink key={t.to} to={t.to} end={t.end} className={({ isActive }) => (isActive ? 'active' : '')}>
-            <Icon name={t.icon} />
+            <span className="pill">
+              <Icon name={t.icon} />
+            </span>
             <span>{t.label}</span>
           </NavLink>
         ))}

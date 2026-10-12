@@ -130,112 +130,128 @@ export function BrewForm() {
           save();
         }}
       >
-        <div className="form-grid">
-          <div className="field">
-            <label htmlFor="f-method">Method</label>
-            <select id="f-method" className="select" value={draft.methodId} onChange={(e) => set('methodId', e.target.value)}>
-              {methods.map((m) => (
-                <option key={m.id} value={m.id}>
-                  {m.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="field">
-            <label htmlFor="f-bean">Bean</label>
-            <select id="f-bean" className="select" value={draft.beanId ?? ''} onChange={(e) => set('beanId', e.target.value ? Number(e.target.value) : undefined)}>
-              <option value="">Not recorded</option>
-              {beans?.map((b) => (
-                <option key={b.id} value={b.id}>
-                  {b.name}
-                  {b.roaster ? ` (${b.roaster})` : ''}
-                </option>
-              ))}
-            </select>
-            <span className="hint">
-              <Link to="/beans/new">Add a bean</Link>
-            </span>
-          </div>
-          <div className="field">
-            <label htmlFor="f-device">Device</label>
-            <input id="f-device" className="input" placeholder="Bialetti 3-cup, V60 02…" value={draft.device ?? ''} onChange={(e) => set('device', e.target.value || undefined)} />
-          </div>
-          <div className="field">
-            <label htmlFor="f-grinder">Grinder</label>
-            <input id="f-grinder" className="input" placeholder="Timemore C2…" value={draft.grinder ?? ''} onChange={(e) => set('grinder', e.target.value || undefined)} />
-          </div>
-          <div className="field">
-            <label htmlFor="f-grind">Grind setting</label>
-            <input id="f-grind" className="input" placeholder="18 clicks, 2.5…" value={draft.grindLabel ?? ''} onChange={(e) => set('grindLabel', e.target.value || undefined)} />
-            <span className="hint">As it reads on your grinder.</span>
-          </div>
-          <div className="field">
-            <label htmlFor="f-temp">Water temperature</label>
-            <div className="unit-input">
-              <input id="f-temp" className="input" type="number" inputMode="decimal" value={draft.tempC ?? ''} onChange={(e) => set('tempC', num(e.target.value))} />
-              <span>°C</span>
+        <section className="form-section">
+          <h3>
+            <span className="n">1</span>Setup
+          </h3>
+          <div className="form-grid">
+            <div className="field">
+              <label htmlFor="f-method">Method</label>
+              <select id="f-method" className="select" value={draft.methodId} onChange={(e) => set('methodId', e.target.value)}>
+                {methods.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="field">
+              <label htmlFor="f-bean">Bean</label>
+              <select id="f-bean" className="select" value={draft.beanId ?? ''} onChange={(e) => set('beanId', e.target.value ? Number(e.target.value) : undefined)}>
+                <option value="">Not recorded</option>
+                {beans?.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.name}
+                    {b.roaster ? ` (${b.roaster})` : ''}
+                  </option>
+                ))}
+              </select>
+              <span className="hint">
+                <Link to={`/beans/new?return=${encodeURIComponent(`/log/new?method=${draft.methodId}&dose=${draft.doseG}${draft.waterG ? `&water=${draft.waterG}` : ''}`)}`}>Add a bean</Link>
+              </span>
+            </div>
+            <div className="field">
+              <label htmlFor="f-device">Device</label>
+              <input id="f-device" className="input" placeholder="Bialetti 3-cup, V60 02…" value={draft.device ?? ''} onChange={(e) => set('device', e.target.value || undefined)} />
+            </div>
+            <div className="field">
+              <label htmlFor="f-grinder">Grinder</label>
+              <input id="f-grinder" className="input" placeholder="Timemore C2…" value={draft.grinder ?? ''} onChange={(e) => set('grinder', e.target.value || undefined)} />
+            </div>
+            <div className="field">
+              <label htmlFor="f-grind">Grind setting</label>
+              <input id="f-grind" className="input" placeholder="18 clicks, 2.5…" value={draft.grindLabel ?? ''} onChange={(e) => set('grindLabel', e.target.value || undefined)} />
+              <span className="hint">As it reads on your grinder.</span>
+            </div>
+            <div className="field">
+              <label htmlFor="f-temp">Water temperature</label>
+              <div className="unit-input">
+                <input id="f-temp" className="input" type="number" inputMode="decimal" value={draft.tempC ?? ''} onChange={(e) => set('tempC', num(e.target.value))} />
+                <span>°C</span>
+              </div>
             </div>
           </div>
-          <div className="field">
-            <label htmlFor="f-dose">Coffee dose</label>
-            <div className="unit-input">
-              <input id="f-dose" className="input" type="number" inputMode="decimal" step={0.1} required value={draft.doseG || ''} onChange={(e) => set('doseG', Number(e.target.value))} />
-              <span>g</span>
-            </div>
-          </div>
-          <div className="field">
-            <label htmlFor="f-out">{usesYield ? 'Yield in cup' : 'Water'}</label>
-            <div className="unit-input">
-              <input
-                id="f-out"
-                className="input"
-                type="number"
-                inputMode="decimal"
-                step={1}
-                value={(usesYield ? draft.yieldG : draft.waterG) ?? ''}
-                onChange={(e) => set(usesYield ? 'yieldG' : 'waterG', num(e.target.value))}
-              />
-              <span>g</span>
-            </div>
-            <span className="hint">Ratio {formatRatio(ratioOf(draft))}</span>
-          </div>
-          <div className="field">
-            <label htmlFor="f-time">Brew time</label>
-            <div className="unit-input">
-              <input id="f-time" className="input" type="number" inputMode="numeric" value={draft.timeS ?? ''} onChange={(e) => set('timeS', num(e.target.value))} />
-              <span>sec</span>
-            </div>
-          </div>
-          <div className="field">
-            <label htmlFor="f-when">When</label>
-            <input id="f-when" className="input" type="datetime-local" value={toLocalInput(draft.brewedAt)} onChange={(e) => e.target.value && set('brewedAt', new Date(e.target.value).toISOString())} />
-          </div>
-        </div>
+        </section>
 
-        <div className="card stack" style={{ gap: 18 }}>
-          <div className="field">
-            <span className="label">Rating</span>
-            <Stars value={draft.rating} onChange={(v) => set('rating', v)} />
+        <section className="form-section">
+          <h3>
+            <span className="n">2</span>Recipe
+          </h3>
+          <div className="form-grid">
+            <div className="field">
+              <label htmlFor="f-dose">Coffee dose</label>
+              <div className="unit-input">
+                <input id="f-dose" className="input" type="number" inputMode="decimal" step={0.1} required value={draft.doseG || ''} onChange={(e) => set('doseG', Number(e.target.value))} />
+                <span>g</span>
+              </div>
+            </div>
+            <div className="field">
+              <label htmlFor="f-out">{usesYield ? 'Yield in cup' : 'Water'}</label>
+              <div className="unit-input">
+                <input
+                  id="f-out"
+                  className="input"
+                  type="number"
+                  inputMode="decimal"
+                  step={1}
+                  value={(usesYield ? draft.yieldG : draft.waterG) ?? ''}
+                  onChange={(e) => set(usesYield ? 'yieldG' : 'waterG', num(e.target.value))}
+                />
+                <span>g</span>
+              </div>
+              <span className="hint">Ratio {formatRatio(ratioOf(draft))}</span>
+            </div>
+            <div className="field">
+              <label htmlFor="f-time">Brew time</label>
+              <div className="unit-input">
+                <input id="f-time" className="input" type="number" inputMode="numeric" value={draft.timeS ?? ''} onChange={(e) => set('timeS', num(e.target.value))} />
+                <span>sec</span>
+              </div>
+            </div>
+            <div className="field">
+              <label htmlFor="f-when">When</label>
+              <input id="f-when" className="input" type="datetime-local" value={toLocalInput(draft.brewedAt)} onChange={(e) => e.target.value && set('brewedAt', new Date(e.target.value).toISOString())} />
+            </div>
           </div>
-          <Scale label="Bitterness" low="None" high="Harsh" value={draft.bitterness} onChange={(v) => set('bitterness', v)} />
-          <Scale label="Acidity" low="Flat" high="Sharp" value={draft.acidity} onChange={(v) => set('acidity', v)} />
-          <Scale label="Sweetness" low="None" high="Syrupy" value={draft.sweetness} onChange={(v) => set('sweetness', v)} />
-          <Scale label="Body" low="Thin" high="Heavy" value={draft.body} onChange={(v) => set('body', v)} />
-        </div>
+        </section>
 
-        <div className="field">
-          <span className="label">Flavours you noticed</span>
-          <FlavourPicker value={draft.flavourTags} onChange={(tags) => set('flavourTags', tags)} />
-        </div>
-
-        <div className="field">
-          <label htmlFor="f-notes">Notes</label>
-          <textarea id="f-notes" className="textarea" value={draft.notes ?? ''} onChange={(e) => set('notes', e.target.value || undefined)} />
-        </div>
-        <div className="field">
-          <label htmlFor="f-next">Next time</label>
-          <textarea id="f-next" className="textarea" placeholder="Grind one step finer, lower the heat…" value={draft.nextTime ?? ''} onChange={(e) => set('nextTime', e.target.value || undefined)} />
-        </div>
+        <section className="form-section">
+          <h3>
+            <span className="n">3</span>How it tasted
+          </h3>
+          <div className="card stack" style={{ gap: 18 }}>
+            <div className="field">
+              <span className="label">Rating</span>
+              <Stars value={draft.rating} onChange={(v) => set('rating', v)} />
+            </div>
+            <Scale label="Bitterness" low="None" high="Harsh" value={draft.bitterness} onChange={(v) => set('bitterness', v)} />
+            <Scale label="Acidity" low="Flat" high="Sharp" value={draft.acidity} onChange={(v) => set('acidity', v)} />
+            <Scale label="Sweetness" low="None" high="Syrupy" value={draft.sweetness} onChange={(v) => set('sweetness', v)} />
+            <Scale label="Body" low="Thin" high="Heavy" value={draft.body} onChange={(v) => set('body', v)} />
+          </div>
+          <div className="field">
+            <span className="label">Flavours you noticed</span>
+            <FlavourPicker value={draft.flavourTags} onChange={(tags) => set('flavourTags', tags)} />
+          </div>
+          <div className="field">
+            <label htmlFor="f-notes">Notes</label>
+            <textarea id="f-notes" className="textarea" value={draft.notes ?? ''} onChange={(e) => set('notes', e.target.value || undefined)} />
+          </div>
+          <div className="field">
+            <label htmlFor="f-next">Next time</label>
+            <textarea id="f-next" className="textarea" placeholder="Grind one step finer, lower the heat…" value={draft.nextTime ?? ''} onChange={(e) => set('nextTime', e.target.value || undefined)} />
+          </div>
+        </section>
 
         {error && (
           <p className="form-error" role="alert">

@@ -17,7 +17,7 @@ export function ProcessingPage() {
       <div className="seg scroll" role="group" aria-label="Processing method" style={{ marginBottom: 16, display: 'flex' }}>
         {processing.map((p) => (
           <button key={p.id} aria-pressed={p.id === current.id} onClick={() => setParams({ p: p.id })} style={{ whiteSpace: 'nowrap' }}>
-            {p.name}
+            {shortName[p.id] ?? p.name}
           </button>
         ))}
       </div>
@@ -91,6 +91,7 @@ export function ProcessingPage() {
 }
 
 const dots = (n: number) => '●'.repeat(n) + '○'.repeat(5 - n);
+const shortName: Record<string, string> = { anaerobic: 'Anaerobic', 'wet-hulled': 'Wet-hulled', carbonic: 'Carbonic' };
 const fruitOn: Record<string, string> = {
   washed: 'No',
   natural: 'Whole cherry',

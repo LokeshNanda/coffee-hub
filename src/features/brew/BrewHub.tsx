@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Icon } from '../../components/Icon';
+import { DeviceIcon } from '../../components/DeviceIcon';
 import { methods } from '../../content';
 import { db } from '../../db/schema';
 import { bestBrewPerMethod } from '../../db/queries';
@@ -27,7 +28,10 @@ export function BrewHub() {
           const b = best?.get(m.id);
           return (
             <li key={m.id}>
-              <Link to={`/brew/timer/${m.id}`} className="rowcard">
+              <Link to={`/brew/timer/${m.id}`} className="rowcard with-icon">
+                <span className="row-icon">
+                  <DeviceIcon method={m.id} />
+                </span>
                 <span className="title">{m.name}</span>
                 <Icon name="timer" width={20} height={20} style={{ color: 'var(--accent)' }} />
                 <span className="meta">

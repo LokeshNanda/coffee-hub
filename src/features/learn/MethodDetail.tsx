@@ -1,6 +1,8 @@
 import { Link, useParams, Navigate } from 'react-router-dom';
-import { PageHead } from '../../components/PageHead';
 import { Icon } from '../../components/Icon';
+import { DeviceIcon } from '../../components/DeviceIcon';
+
+const familyName = { pressure: 'Pressure brewing', percolation: 'Pour-over', immersion: 'Immersion' };
 import { getMethod, grindForBand, roastForPosition, roasts } from '../../content';
 import { formatSeconds } from '../../lib/brew';
 
@@ -14,7 +16,17 @@ export function MethodDetail() {
 
   return (
     <>
-      <PageHead title={m.name} intro={m.tagline} back={{ to: '/learn/methods', label: 'Methods' }} />
+      <Link to="/learn/methods" className="back">
+        <Icon name="back" width={16} height={16} /> Methods
+      </Link>
+      <div className="method-hero">
+        <div>
+          <span className="family">{familyName[m.family]}</span>
+          <h1>{m.name}</h1>
+          <p>{m.tagline}</p>
+        </div>
+        <DeviceIcon method={m.id} className="device" />
+      </div>
 
       <div className="btn-row" style={{ marginBottom: 20 }}>
         <Link to={`/brew/timer/${m.id}`} className="btn primary">

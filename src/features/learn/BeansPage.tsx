@@ -3,7 +3,8 @@ import { PageHead } from '../../components/PageHead';
 import { Markdown } from '../../components/Markdown';
 import { Bars } from '../../components/Bars';
 import { OriginChip } from '../../components/Chips';
-import { prose, varietals } from '../../content';
+import { prose, varietals, getOrigin } from '../../content';
+import { Icon } from '../../components/Icon';
 
 const species = [
   { id: 'arabica', name: 'Arabica', caffeine: 1.2, sweetness: 4, acidity: 4, body: 3, bitterness: 2, hardiness: 2 },
@@ -12,10 +13,16 @@ const species = [
 
 export function BeansPage() {
   const [filter, setFilter] = useState<'all' | 'arabica' | 'robusta' | 'liberica'>('all');
-  const list = varietals.filter((v) => filter === 'all' || v.species === filter);
+  const [query, setQuery] = useState('');
+  const q = query.trim().toLowerCase();
+  const list = varietals.filter(
+    (v) =>
+      (filter === 'all' || v.species === filter) &&
+      (!q || v.name.toLowerCase().includes(q) || v.origins.some((o) => getOrigin(o)?.name.toLowerCase().includes(q))),
+  );
   return (
     <>
-      <PageHead title="Beans & varietals" intro="Two species carry the coffee world, and a few dozen cultivars decide what a bag can taste like." />
+      <PageHead title="Beans and varietals" intro="Two species carry the coffee world, and a few dozen cultivars decide what a bag can taste like." />
 
       <section className="section">
         <h2>Arabica against robusta</h2>
@@ -46,6 +53,10 @@ export function BeansPage() {
 
       <section className="section">
         <h2>Varietals</h2>
+        <div className="search">
+          <Icon name="search" />
+          <input className="input" placeholder="Search varietals or origins" value={query} onChange={(e) => setQuery(e.target.value)} aria-label="Search varietals" />
+        </div>
         <div className="seg" role="group" aria-label="Filter by species" style={{ marginBottom: 12 }}>
           {(['all', 'arabica', 'robusta', 'liberica'] as const).map((s) => (
             <button key={s} aria-pressed={filter === s} onClick={() => setFilter(s)}>
@@ -53,26 +64,27 @@ export function BeansPage() {
             </button>
           ))}
         </div>
-        <ul className="list">
+        {list.length === 0 && <p className="muted">Nothing matches.</p>}
+        <div className="stack" style={{ gap: 8 }}>
           {list.map((v) => (
-            <li key={v.id} className="card">
-              <div className="spread">
-                <h3>{v.name}</h3>
-                <span className="faint" style={{ fontSize: '0.8rem' }}>
-                  {v.species}
-                </span>
+            <details className="acc" key={v.id}>
+              <summary>
+                <span>{v.name}</span>
+                <span className="faint">{v.origins.map((o) => getOrigin(o)?.name).filter(Boolean).slice(0, 2).join(', ')}</span>
+              </summary>
+              <div className="acc-body">
+                <p className="muted" style={{ fontSize: '0.92rem', margin: '0 0 10px' }}>
+                  {v.notes}
+                </p>
+                <div className="chips">
+                  {v.origins.map((o) => (
+                    <OriginChip key={o} id={o} />
+                  ))}
+                </div>
               </div>
-              <p className="muted" style={{ fontSize: '0.92rem', margin: '6px 0 10px' }}>
-                {v.notes}
-              </p>
-              <div className="chips">
-                {v.origins.map((o) => (
-                  <OriginChip key={o} id={o} />
-                ))}
-              </div>
-            </li>
+            </details>
           ))}
-        </ul>
+        </div>
       </section>
     </>
   );

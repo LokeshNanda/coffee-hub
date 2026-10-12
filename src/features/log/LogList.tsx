@@ -82,7 +82,13 @@ export function LogList() {
               <li key={b.id}>
                 <Link to={`/log/${b.id}`} className="rowcard">
                   <span className="title">
-                    {beanName(b.beanId) ?? 'Unnamed bean'} <span className="faint">·</span> {getMethod(b.methodId)?.name ?? b.methodId}
+                    {getMethod(b.methodId)?.name ?? b.methodId}
+                    {beanName(b.beanId) && (
+                      <>
+                        {' '}
+                        <span className="faint">·</span> {beanName(b.beanId)}
+                      </>
+                    )}
                   </span>
                   <Stars value={b.rating} small />
                   <span className="meta">

@@ -35,7 +35,7 @@ export function BrewDetail() {
 
   return (
     <>
-      <PageHead title={`${bean?.name ?? 'Unnamed bean'}`} back={{ to: '/log', label: 'Log' }} />
+      <PageHead title={bean?.name ?? getMethod(brew.methodId)?.name ?? 'Brew'} back={{ to: '/log', label: 'Log' }} />
       <div className="row" style={{ marginTop: -12, marginBottom: 16 }}>
         <MethodChip id={brew.methodId} />
         <span className="muted" style={{ fontSize: '0.9rem' }}>

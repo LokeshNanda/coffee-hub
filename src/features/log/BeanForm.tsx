@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { PageHead } from '../../components/PageHead';
 import { db, type Bean } from '../../db/schema';
 import { origins, processing, varietals, roastForPosition } from '../../content';
@@ -13,6 +13,7 @@ export function BeanForm() {
   const { id } = useParams();
   const editing = id !== undefined;
   const navigate = useNavigate();
+  const [params] = useSearchParams();
   const [draft, setDraft] = useState<Draft | null>(editing ? null : blank());
   const [error, setError] = useState<string | null>(null);
 
@@ -34,7 +35,13 @@ export function BeanForm() {
         navigate(`/beans/${id}`);
       } else {
         const newId = await db.beans.add(draft);
-        navigate(`/beans/${newId}`, { replace: true });
+        const returnTo = params.get('return');
+        if (returnTo) {
+          const sep = returnTo.includes('?') ? '&' : '?';
+          navigate(`${returnTo}${sep}bean=${newId}`, { replace: true });
+        } else {
+          navigate(`/beans/${newId}`, { replace: true });
+        }
       }
     } catch (e) {
       setError(`Could not save: ${(e as Error).message}`);

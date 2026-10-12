@@ -1,12 +1,28 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Icon } from '../../components/Icon';
 import { db } from '../../db/schema';
 import { exportBackup, backupFileName, parseBackup, importBackup, type BackupFile, type ImportMode } from '../../db/backup';
 import { useTheme, type Theme } from '../../app/theme';
 
+const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`;
+
+interface InstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+}
+
 export function SettingsPage() {
   const [theme, setTheme] = useTheme();
+  const [installEvent, setInstallEvent] = useState<InstallPromptEvent | null>(null);
+  useEffect(() => {
+    const onPrompt = (e: Event) => {
+      e.preventDefault();
+      setInstallEvent(e as InstallPromptEvent);
+    };
+    window.addEventListener('beforeinstallprompt', onPrompt);
+    return () => window.removeEventListener('beforeinstallprompt', onPrompt);
+  }, []);
+  const standalone = window.matchMedia('(display-mode: standalone)').matches;
   const counts = useLiveQuery(async () => ({ beans: await db.beans.count(), brews: await db.brews.count() }), []);
   const fileRef = useRef<HTMLInputElement>(null);
   const [pending, setPending] = useState<BackupFile | null>(null);
@@ -59,7 +75,7 @@ export function SettingsPage() {
       <header className="page-head">
         <h1>Settings</h1>
         <p>
-          {counts ? `${counts.brews} brews and ${counts.beans} beans` : '…'} stored in this browser. Nothing leaves your device unless you export it.
+          {counts ? `${plural(counts.brews, 'brew')} and ${plural(counts.beans, 'bean')}` : '…'} stored in this browser. Nothing leaves your device unless you export it.
         </p>
       </header>
 
@@ -147,9 +163,33 @@ export function SettingsPage() {
         )}
       </section>
 
-      <p className="faint" style={{ fontSize: '0.85rem' }}>
-        Coffee Hub runs entirely in your browser and works offline once installed.
-      </p>
+      <section className="section card stack">
+        <h3>Install on your phone</h3>
+        {standalone ? (
+          <p className="muted" style={{ margin: 0 }}>
+            Installed. Coffee Hub works offline from your home screen.
+          </p>
+        ) : installEvent ? (
+          <>
+            <p className="muted" style={{ margin: 0 }}>
+              Add it to your home screen so it opens full-screen and works offline.
+            </p>
+            <button
+              className="btn primary"
+              onClick={async () => {
+                await installEvent.prompt();
+                setInstallEvent(null);
+              }}
+            >
+              Install app
+            </button>
+          </>
+        ) : (
+          <p className="muted" style={{ margin: 0 }}>
+            On iPhone: open in Safari, tap Share, then "Add to Home Screen". On Android: use the browser menu and choose "Install app" or "Add to Home screen".
+          </p>
+        )}
+      </section>
     </>
   );
 }

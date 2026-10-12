@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { PageHead } from '../../components/PageHead';
+import { DeviceIcon } from '../../components/DeviceIcon';
 import { methods, grindForBand } from '../../content';
 import { formatSeconds } from '../../lib/brew';
 
@@ -13,7 +14,10 @@ export function MethodsPage() {
       <ul className="list">
         {methods.map((m) => (
           <li key={m.id}>
-            <Link to={`/learn/methods/${m.id}`} className="rowcard">
+            <Link to={`/learn/methods/${m.id}`} className="rowcard with-icon">
+              <span className="row-icon">
+                <DeviceIcon method={m.id} />
+              </span>
               <span className="title">{m.name}</span>
               <span className="faint" style={{ fontSize: '0.8rem' }}>
                 {familyName[m.family]}

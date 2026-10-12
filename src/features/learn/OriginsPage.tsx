@@ -16,7 +16,24 @@ const land: number[][][] = [
 ];
 const px = (lon: number) => ((lon + 180) / 360) * 100;
 const py = (lat: number) => ((90 - lat) / 180) * 100 * 0.5;
-const poly = (pts: number[][]) => pts.map(([lon, lat]) => `${px(lon).toFixed(1)},${py(lat).toFixed(1)}`).join(' ');
+
+function inside(lon: number, lat: number, poly: number[][]): boolean {
+  let hit = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const [xi, yi] = poly[i];
+    const [xj, yj] = poly[j];
+    if (yi > lat !== yj > lat && lon < ((xj - xi) * (lat - yi)) / (yj - yi) + xi) hit = !hit;
+  }
+  return hit;
+}
+
+/** A dot-matrix world: one dot per 2.4 degrees wherever a continent outline covers it. */
+const dots: { x: number; y: number }[] = [];
+for (let lat = 72; lat >= -56; lat -= 2.4) {
+  for (let lon = -170; lon <= 180; lon += 2.4) {
+    if (land.some((p) => inside(lon, lat, p))) dots.push({ x: px(lon), y: py(lat) });
+  }
+}
 
 const regions: { id: Region | 'all'; name: string }[] = [
   { id: 'all', name: 'All' },
@@ -52,9 +69,9 @@ export function OriginsPage() {
       <div className="map">
         <svg viewBox="0 14 100 30" role="img" aria-label="World map with coffee origins">
           <rect x="0" y="0" width="100" height="50" fill="var(--surface)" />
-          <rect x="0" y={py(23.4)} width="100" height={py(-23.4) - py(23.4)} fill="var(--accent-soft)" opacity="0.6" />
-          {land.map((pts, i) => (
-            <polygon key={i} points={poly(pts)} fill="var(--surface-2)" stroke="var(--line)" strokeWidth="0.3" strokeLinejoin="round" />
+          <rect x="0" y={py(23.4)} width="100" height={py(-23.4) - py(23.4)} fill="var(--accent-soft)" opacity="0.5" />
+          {dots.map((d, i) => (
+            <circle key={i} cx={d.x} cy={d.y} r="0.42" fill="var(--text-3)" opacity="0.55" />
           ))}
           {shown.map((o) => {
             const on = o.id === selectedId;
