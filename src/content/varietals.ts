@@ -1,0 +1,27 @@
+import type { Varietal } from './types';
+
+export const varietals: Varietal[] = [
+  { id: 'typica', name: 'Typica', species: 'arabica', origins: ['yemen', 'indonesia', 'peru', 'colombia', 'papua-new-guinea'], notes: 'The original cultivated arabica, carried from Yemen to Java and the Americas. Low yield, tall trees, excellent sweetness and clarity.' },
+  { id: 'bourbon', name: 'Bourbon', species: 'arabica', origins: ['rwanda', 'burundi', 'brazil', 'el-salvador', 'guatemala'], notes: 'A natural mutation of typica from Réunion island. Rounder and sweeter than typica with more body. Red, yellow and pink variants exist.' },
+  { id: 'pink-bourbon', name: 'Pink Bourbon', species: 'arabica', origins: ['colombia'], notes: 'A Colombian cultivar with pink cherries, now known to be genetically closer to Ethiopian landraces than to bourbon. Intensely floral and fruity.' },
+  { id: 'caturra', name: 'Caturra', species: 'arabica', origins: ['colombia', 'costa-rica', 'guatemala', 'peru'], notes: 'A dwarf mutation of bourbon found in Brazil. Compact, productive, bright acidity, slightly less body than bourbon.' },
+  { id: 'catuai', name: 'Catuaí', species: 'arabica', origins: ['brazil', 'costa-rica', 'honduras', 'panama'], notes: 'Mundo Novo crossed with Caturra. Short, hardy and high-yielding. Clean and sweet when grown high.' },
+  { id: 'mundo-novo', name: 'Mundo Novo', species: 'arabica', origins: ['brazil'], notes: 'A natural typica and bourbon cross. Vigorous and productive, with a heavy body suited to Brazilian naturals.' },
+  { id: 'gesha', name: 'Gesha', species: 'arabica', origins: ['panama', 'colombia', 'costa-rica', 'ethiopia'], notes: 'Collected from the Gori Gesha forest in Ethiopia and made famous at Hacienda La Esmeralda in Panama. Elongated beans, jasmine, bergamot and tea-like delicacy. The most expensive coffees in the world.' },
+  { id: 'sl28', name: 'SL28', species: 'arabica', origins: ['kenya'], notes: 'Selected by Scott Laboratories in the 1930s. Drought tolerant, with the blackcurrant and citrus intensity that defines Kenyan coffee.' },
+  { id: 'sl34', name: 'SL34', species: 'arabica', origins: ['kenya'], notes: 'Sibling to SL28, better suited to higher rainfall. Heavier body, a little less acid.' },
+  { id: 'ruiru-11', name: 'Ruiru 11', species: 'arabica', origins: ['kenya'], notes: 'A disease-resistant Kenyan hybrid. Reliable yield, less cup complexity than the SL varieties.' },
+  { id: 'pacamara', name: 'Pacamara', species: 'arabica', origins: ['el-salvador', 'guatemala'], notes: 'A cross of Pacas and Maragogipe, bred in El Salvador. Huge beans, savoury and fruity with a wild, herbal edge.' },
+  { id: 'pacas', name: 'Pacas', species: 'arabica', origins: ['el-salvador', 'honduras'], notes: 'A dwarf bourbon mutation from El Salvador. Sweet, balanced, productive.' },
+  { id: 'villa-sarchi', name: 'Villa Sarchí', species: 'arabica', origins: ['costa-rica'], notes: 'A Costa Rican dwarf bourbon. Bright and sweet, often used for honey lots.' },
+  { id: 'castillo', name: 'Castillo', species: 'arabica', origins: ['colombia'], notes: 'Colombia\'s rust-resistant workhorse, bred from Caturra and Timor Hybrid. Cup quality is better than its reputation when grown high.' },
+  { id: 'lempira', name: 'Lempira', species: 'arabica', origins: ['honduras'], notes: 'Honduran rust-resistant Catimor-type cultivar. Reliable, mild.' },
+  { id: 'heirloom', name: 'Ethiopian landraces', species: 'arabica', origins: ['ethiopia', 'yemen'], notes: 'Not one varietal but thousands of wild and semi-wild types growing in Ethiopian forests. "Heirloom" on a bag means the lot is a mix of them.' },
+  { id: 'arusha', name: 'Arusha', species: 'arabica', origins: ['papua-new-guinea'], notes: 'A typica or bourbon descendant from Tanzania, now widely planted in PNG.' },
+  { id: 's795', name: 'S795', species: 'arabica', origins: ['india', 'indonesia'], notes: 'An Indian selection with partial liberica ancestry, giving rust resistance. The classic Indian arabica with a mellow, nutty cup.' },
+  { id: 'kent', name: 'Kent', species: 'arabica', origins: ['india'], notes: 'An early rust-resistant typica selection from Mysore, planted across India and East Africa in the 1920s.' },
+  { id: 'timor-hybrid', name: 'Timor Hybrid', species: 'arabica', origins: ['indonesia'], notes: 'A spontaneous arabica and robusta cross found on Timor. The parent of most rust-resistant cultivars worldwide.' },
+  { id: 'catimor', name: 'Catimor', species: 'arabica', origins: ['india', 'indonesia', 'vietnam'], notes: 'Caturra crossed with Timor Hybrid. Very productive and resistant, with a rougher cup that improves at altitude.' },
+  { id: 'robusta', name: 'Robusta (Coffea canephora)', species: 'robusta', origins: ['vietnam', 'india', 'indonesia'], notes: 'A different species: twice the caffeine, hardier at low altitude, bitter and rubbery when cheap, chocolatey and dense when well grown. Adds crema and body to espresso blends.' },
+  { id: 'liberica', name: 'Liberica', species: 'liberica', origins: ['indonesia'], notes: 'A third species with large, irregular beans and a smoky, jackfruit-like flavour. Grown mostly in the Philippines and Malaysia.' },
+];

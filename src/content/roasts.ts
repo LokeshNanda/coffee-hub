@@ -1,0 +1,88 @@
+import type { RoastLevel } from './types';
+
+export const roasts: RoastLevel[] = [
+  {
+    id: 'light',
+    name: 'Light',
+    position: 12,
+    colour: '#b98a5a',
+    surface: 'Dry, matte, light brown. Ends just after first crack.',
+    acidity: 5,
+    body: 2,
+    sweetness: 3,
+    bitterness: 1,
+    description:
+      'Roasted only until first crack has finished. Origin character dominates: florals, fruit acids and tea-like delicacy. Dense beans that need a finer grind and hotter water to extract well. Common for pour-over and the lighter end of filter.',
+    suits: ['v60', 'chemex', 'kalita', 'aeropress'],
+  },
+  {
+    id: 'light-medium',
+    name: 'Light-medium',
+    position: 30,
+    colour: '#9d6b3f',
+    surface: 'Dry, slightly deeper brown.',
+    acidity: 4,
+    body: 3,
+    sweetness: 4,
+    bitterness: 1,
+    description:
+      'A little development after first crack. Acidity is still bright but sugars have caramelised enough to add sweetness and roundness. The sweet spot for most specialty filter coffee and for "modern" espresso.',
+    suits: ['v60', 'chemex', 'kalita', 'aeropress', 'espresso'],
+  },
+  {
+    id: 'medium',
+    name: 'Medium',
+    position: 48,
+    colour: '#7a4b2a',
+    surface: 'Dry to a faint sheen. Medium brown.',
+    acidity: 3,
+    body: 4,
+    sweetness: 5,
+    bitterness: 2,
+    description:
+      'Balanced. Acidity is softened, caramel and chocolate notes come forward, body is fuller. Works in almost every brewer, and is the classic choice for a crowd-pleasing espresso or French press.',
+    suits: ['v60', 'kalita', 'aeropress', 'french-press', 'moka', 'espresso'],
+  },
+  {
+    id: 'medium-dark',
+    name: 'Medium-dark',
+    position: 66,
+    colour: '#54301a',
+    surface: 'Small oil spots appearing. Dark brown.',
+    acidity: 2,
+    body: 5,
+    sweetness: 4,
+    bitterness: 3,
+    description:
+      'Just into second crack. Origin character fades behind roast flavours: bittersweet chocolate, toasted nuts, a little smoke. Heavy body. Classic for moka pot and traditional Italian-style espresso.',
+    suits: ['moka', 'espresso', 'french-press'],
+  },
+  {
+    id: 'dark',
+    name: 'Dark',
+    position: 84,
+    colour: '#33190d',
+    surface: 'Oily sheen across the bean. Very dark brown.',
+    acidity: 1,
+    body: 4,
+    sweetness: 2,
+    bitterness: 5,
+    description:
+      'Well into second crack. Oils have migrated to the surface. Smoky, carbon and dark-cocoa flavours dominate; sweetness has been burnt away. Beans are brittle and porous, so grind coarser and use cooler water to avoid harshness.',
+    suits: ['moka', 'french-press', 'espresso'],
+  },
+  {
+    id: 'very-dark',
+    name: 'Very dark',
+    position: 96,
+    colour: '#1c0d07',
+    surface: 'Glossy, almost black.',
+    acidity: 1,
+    body: 3,
+    sweetness: 1,
+    bitterness: 5,
+    description:
+      'Taken to the edge of charring. Thin, ashy, bitter. Sometimes labelled Italian or Spanish roast. Mostly used for very milky drinks where the bitterness cuts through.',
+    suits: ['moka', 'espresso'],
+  },
+];
